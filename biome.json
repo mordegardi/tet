@@ -7,7 +7,7 @@
   },
   "files": {
     "ignoreUnknown": true,
-    "ignore": ["**/node_modules", "**/dist", "**/.next", "**/.turbo", "**/coverage"]
+    "ignore": ["**/node_modules", "**/dist", "**/.next", "**/.turbo", "**/coverage", "**/generated"]
   },
   "organizeImports": {
     "enabled": true
@@ -26,6 +26,9 @@
     }
   },
   "javascript": {
+    "parser": {
+      "unsafeParameterDecoratorsEnabled": true
+    },
     "formatter": {
       "quoteStyle": "single",
       "jsxQuoteStyle": "double",

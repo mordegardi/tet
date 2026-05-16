@@ -33,6 +33,12 @@ Thumbs.db
 
 # Prisma
 apps/backend/prisma/migrations/dev.db*
+apps/backend/generated/
+apps/backend/src/generated/
+
+# Shared package compiled output (TS sources only, no build step)
+packages/shared/src/*.js
+packages/shared/src/*.js.map
 
 # Coverage
 coverage/
