@@ -1,7 +1,15 @@
 import type { CreateTransactionRequest } from '@expense-tracker/shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDateString, IsNumber, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export class CreateTransactionDto implements CreateTransactionRequest {
   @ApiProperty({ example: 1500.5, description: 'Amount, up to 2 decimal places' })
@@ -25,5 +33,6 @@ export class CreateTransactionDto implements CreateTransactionRequest {
     description: 'ID of an existing category belonging to this user',
   })
   @IsString()
+  @IsNotEmpty()
   categoryId!: string;
 }

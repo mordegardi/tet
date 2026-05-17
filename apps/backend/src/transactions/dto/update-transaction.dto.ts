@@ -1,7 +1,15 @@
 import type { UpdateTransactionRequest } from '@expense-tracker/shared';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
-import { IsDateString, IsNumber, IsOptional, IsString, MaxLength, Min } from 'class-validator';
+import {
+  IsDateString,
+  IsNotEmpty,
+  IsNumber,
+  IsOptional,
+  IsString,
+  MaxLength,
+  Min,
+} from 'class-validator';
 
 export class UpdateTransactionDto implements UpdateTransactionRequest {
   @ApiPropertyOptional({ example: 2000.0 })
@@ -25,5 +33,6 @@ export class UpdateTransactionDto implements UpdateTransactionRequest {
   @ApiPropertyOptional({ example: 'clyyy...', description: 'New category ID' })
   @IsOptional()
   @IsString()
+  @IsNotEmpty()
   categoryId?: string;
 }

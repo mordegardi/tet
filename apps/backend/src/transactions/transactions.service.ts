@@ -30,7 +30,7 @@ export class TransactionsService {
 
   async update(id: string, userId: string, dto: UpdateTransactionDto) {
     await this.findOne(id, userId);
-    if (dto.categoryId) {
+    if (dto.categoryId !== undefined) {
       const category = await this.categoriesRepository.findByIdForUser(dto.categoryId, userId);
       if (!category) throw new NotFoundException('Category not found');
     }
