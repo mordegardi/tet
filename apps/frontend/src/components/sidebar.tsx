@@ -4,7 +4,9 @@ import { cn } from '@/lib/utils';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 
-const navItems = [
+type NavItem = { label: string; href: string; disabled?: boolean };
+
+const navItems: NavItem[] = [
   { label: 'Главная', href: '/' },
   { label: 'Категории', href: '/categories', disabled: true },
   { label: 'Транзакции', href: '/transactions', disabled: true },
@@ -20,6 +22,7 @@ export function Sidebar() {
           disabled ? (
             <span
               key={href}
+              aria-disabled="true"
               className="cursor-not-allowed rounded-md px-3 py-2 text-sm text-gray-400"
             >
               {label}
