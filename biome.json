@@ -22,21 +22,12 @@
   "linter": {
     "enabled": true,
     "rules": {
-      "recommended": true
-    }
-  },
-  "overrides": [
-    {
-      "include": ["apps/backend/src/**"],
-      "linter": {
-        "rules": {
-          "style": {
-            "useImportType": "off"
-          }
-        }
+      "recommended": true,
+      "style": {
+        "useImportType": "off"
       }
     }
-  ],
+  },
   "javascript": {
     "parser": {
       "unsafeParameterDecoratorsEnabled": true
