@@ -37,14 +37,14 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   return res.json() as Promise<T>;
 }
 
-function authenticatedRequest<T>(path: string, init?: RequestInit): Promise<T> {
+async function authenticatedRequest<T>(path: string, init?: RequestInit): Promise<T> {
   const token = authStorage.getToken();
-  if (!token) return Promise.reject(new ApiError(401, 'Not authenticated'));
+  if (!token) throw new ApiError(401, 'Not authenticated');
   return request<T>(path, {
     ...init,
     headers: {
-      Authorization: `Bearer ${token}`,
       ...(init?.headers ?? {}),
+      Authorization: `Bearer ${token}`,
     },
   });
 }
