@@ -22,17 +22,16 @@ model User {
   transactions Transaction[]
 }
 
-enum CategoryType {
+enum TransactionType {
   INCOME
   EXPENSE
 }
 
 model Category {
-  id    String       @id @default(cuid())
+  id    String @id @default(cuid())
   name  String
   color String
   icon  String
-  type  CategoryType
 
   userId String
   user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
@@ -42,24 +41,25 @@ model Category {
 
   transactions Transaction[]
 
-  @@unique([userId, name, type])
+  @@unique([userId, name])
   @@index([userId])
 }
 
 model Transaction {
-  id          String   @id @default(cuid())
-  amount      Decimal  @db.Decimal(12, 2)
+  id          String          @id @default(cuid())
+  amount      Decimal         @db.Decimal(12, 2)
   description String?
   date        DateTime
+  type        TransactionType
 
-  userId      String
-  user        User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 
-  categoryId  String
-  category    Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
+  categoryId String
+  category   Category @relation(fields: [categoryId], references: [id], onDelete: Restrict)
 
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@index([userId])
   @@index([userId, date])
