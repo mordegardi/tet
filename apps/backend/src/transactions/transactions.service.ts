@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import type { CategoriesRepository } from '../categories/categories.repository';
+import { CategoriesRepository } from '../categories/categories.repository';
 import type { CreateTransactionDto } from './dto/create-transaction.dto';
 import type { TransactionSummaryQueryDto } from './dto/transaction-summary-query.dto';
 import type { UpdateTransactionDto } from './dto/update-transaction.dto';
-import type { TransactionsRepository } from './transactions.repository';
+import { TransactionsRepository } from './transactions.repository';
 
 @Injectable()
 export class TransactionsService {

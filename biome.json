@@ -25,6 +25,18 @@
       "recommended": true
     }
   },
+  "overrides": [
+    {
+      "include": ["apps/backend/src/**"],
+      "linter": {
+        "rules": {
+          "style": {
+            "useImportType": "off"
+          }
+        }
+      }
+    }
+  ],
   "javascript": {
     "parser": {
       "unsafeParameterDecoratorsEnabled": true

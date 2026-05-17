@@ -15,10 +15,10 @@ import {
 import { ApiBearerAuth, ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
 import { CurrentUser } from '../auth/decorators/current-user.decorator';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
-import type { CreateTransactionDto } from './dto/create-transaction.dto';
-import type { TransactionSummaryQueryDto } from './dto/transaction-summary-query.dto';
-import type { UpdateTransactionDto } from './dto/update-transaction.dto';
-import type { TransactionsService } from './transactions.service';
+import { CreateTransactionDto } from './dto/create-transaction.dto';
+import { TransactionSummaryQueryDto } from './dto/transaction-summary-query.dto';
+import { UpdateTransactionDto } from './dto/update-transaction.dto';
+import { TransactionsService } from './transactions.service';
 
 @ApiTags('transactions')
 @ApiBearerAuth()
