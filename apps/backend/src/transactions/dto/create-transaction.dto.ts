@@ -1,4 +1,4 @@
-import type { CreateTransactionRequest, TransactionType } from '@expense-tracker/shared';
+import type { CreateTransactionRequest } from '@expense-tracker/shared';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
@@ -11,6 +11,7 @@ import {
   MaxLength,
   Min,
 } from 'class-validator';
+import { TransactionType } from '../../generated/prisma/client';
 
 export class CreateTransactionDto implements CreateTransactionRequest {
   @ApiProperty({ example: 1500.5, description: 'Amount, up to 2 decimal places' })
@@ -37,7 +38,7 @@ export class CreateTransactionDto implements CreateTransactionRequest {
   @IsNotEmpty()
   categoryId!: string;
 
-  @ApiProperty({ enum: ['INCOME', 'EXPENSE'] })
-  @IsEnum({ INCOME: 'INCOME', EXPENSE: 'EXPENSE' })
+  @ApiProperty({ enum: Object.values(TransactionType) })
+  @IsEnum(TransactionType)
   type!: TransactionType;
 }
