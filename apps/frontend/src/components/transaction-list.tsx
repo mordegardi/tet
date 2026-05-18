@@ -52,10 +52,10 @@ export function TransactionList() {
           <div className="text-right">
             <p
               className={`text-sm font-semibold ${
-                t.category.type === 'INCOME' ? 'text-green-600' : 'text-red-600'
+                t.type === 'INCOME' ? 'text-green-600' : 'text-red-600'
               }`}
             >
-              {formatAmount(t.amount, t.category.type)}
+              {formatAmount(t.amount, t.type)}
             </p>
             <p className="text-xs text-gray-400">{formatDate(t.date)}</p>
           </div>
