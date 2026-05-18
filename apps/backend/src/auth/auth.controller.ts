@@ -1,11 +1,13 @@
 import type { AuthResponse } from '@expense-tracker/shared';
 import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import type { AuthService } from './auth.service';
-import type { LoginDto } from './dto/login.dto';
-import type { RegisterDto } from './dto/register.dto';
+import { Throttle } from '@nestjs/throttler';
+import { AuthService } from './auth.service';
+import { LoginDto } from './dto/login.dto';
+import { RegisterDto } from './dto/register.dto';
 
 @ApiTags('auth')
+@Throttle({ default: { ttl: 60_000, limit: 10 } })
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
