@@ -1,7 +1,7 @@
 import type { PublicUser } from '@expense-tracker/shared';
 import { Injectable } from '@nestjs/common';
 import type { User } from '../generated/prisma/client';
-import type { UsersRepository } from './users.repository';
+import { UsersRepository } from './users.repository';
 
 @Injectable()
 export class UsersService {
