@@ -5,7 +5,7 @@ import type { UpdateCategoryData } from './categories.repository';
 import type { CreateCategoryDto } from './dto/create-category.dto';
 import type { UpdateCategoryDto } from './dto/update-category.dto';
 
-const DUPLICATE_MESSAGE = 'Category with this name and type already exists';
+const DUPLICATE_MESSAGE = 'Category with this name already exists';
 
 @Injectable()
 export class CategoriesService {
