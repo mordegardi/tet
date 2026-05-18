@@ -63,7 +63,7 @@ After `pnpm dev`: frontend `http://localhost:3000`, backend `http://localhost:30
 - Bootstrap in `apps/backend/src/main.ts`: registers a global `ValidationPipe` (whitelist + transform + forbidNonWhitelisted) and mounts Swagger at `/api/docs`. `PORT` comes from `ConfigService` (default `3001`).
 - `AppModule` imports `ConfigModule.forRoot({ isGlobal: true })` and a global `PrismaModule`.
 - `PrismaService` extends `PrismaClient` and uses `OnModuleInit`/`OnModuleDestroy` to manage the connection lifecycle — inject it anywhere instead of instantiating a new client.
-- Prisma schema lives at `apps/backend/prisma/schema.prisma` (provider `postgresql`, generator `prisma-client-js`). Migrations are not yet initialised.
+- **Prisma v7** — uses the new `prisma-client` generator (not `prisma-client-js`). The generated client is output to `apps/backend/src/generated/prisma`; import from `../generated/prisma/client` (not `@prisma/client`). The datasource `url` is no longer in `schema.prisma` — it lives in `apps/backend/prisma.config.ts` via `defineConfig`. Direct PostgreSQL connections require `@prisma/adapter-pg`: `PrismaService` instantiates a `PrismaPg` adapter and passes it to `super({ adapter })`. Migrations are not yet initialised.
 - Validation uses `class-validator` + `class-transformer` decorators on DTOs. Swagger annotations (`@ApiTags`, `@ApiProperty`, etc.) drive the OpenAPI document.
 
 ### Frontend (Next.js 16, App Router)
