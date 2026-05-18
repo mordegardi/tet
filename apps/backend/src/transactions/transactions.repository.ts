@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { Prisma } from '../generated/prisma/client';
+import { Prisma, TransactionType } from '../generated/prisma/client';
 import { PrismaService } from '../prisma/prisma.service';
 
 interface CreateTransactionData {
@@ -8,6 +8,7 @@ interface CreateTransactionData {
   amount: number;
   description?: string;
   date: string;
+  type: TransactionType;
 }
 
 type UpdateTransactionData = Partial<Omit<CreateTransactionData, 'userId'>>;
@@ -39,6 +40,7 @@ export class TransactionsRepository {
         amount: data.amount,
         description: data.description,
         date: new Date(data.date),
+        type: data.type,
       },
       include: { category: true },
     });
@@ -52,6 +54,7 @@ export class TransactionsRepository {
         ...(data.amount !== undefined && { amount: data.amount }),
         ...(data.description !== undefined && { description: data.description }),
         ...(data.date !== undefined && { date: new Date(data.date) }),
+        ...(data.type !== undefined && { type: data.type }),
       },
       include: { category: true },
     });
@@ -64,12 +67,12 @@ export class TransactionsRepository {
   async aggregateByType(userId: string, gte: Date, lt: Date) {
     const [income, expense] = await Promise.all([
       this.prisma.transaction.aggregate({
-        where: { userId, date: { gte, lt }, category: { type: 'INCOME' } },
+        where: { userId, date: { gte, lt }, type: 'INCOME' },
         _sum: { amount: true },
         _count: { id: true },
       }),
       this.prisma.transaction.aggregate({
-        where: { userId, date: { gte, lt }, category: { type: 'EXPENSE' } },
+        where: { userId, date: { gte, lt }, type: 'EXPENSE' },
         _sum: { amount: true },
         _count: { id: true },
       }),

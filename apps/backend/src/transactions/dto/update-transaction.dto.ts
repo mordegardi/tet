@@ -1,8 +1,9 @@
-import type { UpdateTransactionRequest } from '@expense-tracker/shared';
+import type { TransactionType, UpdateTransactionRequest } from '@expense-tracker/shared';
 import { ApiPropertyOptional } from '@nestjs/swagger';
 import { Type } from 'class-transformer';
 import {
   IsDateString,
+  IsEnum,
   IsNotEmpty,
   IsNumber,
   IsOptional,
@@ -35,4 +36,9 @@ export class UpdateTransactionDto implements UpdateTransactionRequest {
   @IsString()
   @IsNotEmpty()
   categoryId?: string;
+
+  @ApiPropertyOptional({ enum: ['INCOME', 'EXPENSE'] })
+  @IsOptional()
+  @IsEnum({ INCOME: 'INCOME', EXPENSE: 'EXPENSE' })
+  type?: TransactionType;
 }
