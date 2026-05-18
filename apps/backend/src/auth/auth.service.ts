@@ -1,9 +1,9 @@
 import type { AuthResponse, JwtPayload } from '@expense-tracker/shared';
 import { ConflictException, Injectable, UnauthorizedException } from '@nestjs/common';
-import type { JwtService } from '@nestjs/jwt';
+import { JwtService } from '@nestjs/jwt';
 import * as bcrypt from 'bcrypt';
-import type { User } from '../generated/prisma/client';
-import type { UsersService } from '../users/users.service';
+import { Prisma, type User } from '../generated/prisma/client';
+import { UsersService } from '../users/users.service';
 import type { LoginDto } from './dto/login.dto';
 import type { RegisterDto } from './dto/register.dto';
 
@@ -15,17 +15,20 @@ export class AuthService {
   ) {}
 
   async register(dto: RegisterDto): Promise<AuthResponse> {
-    const existing = await this.usersService.findByEmail(dto.email);
-    if (existing) throw new ConflictException('Email already registered');
-
     const passwordHash = await bcrypt.hash(dto.password, 10);
-    const user = await this.usersService.createUser({
-      email: dto.email,
-      name: dto.name,
-      passwordHash,
-    });
-
-    return this.issueToken(user);
+    try {
+      const user = await this.usersService.createUser({
+        email: dto.email,
+        name: dto.name,
+        passwordHash,
+      });
+      return this.issueToken(user);
+    } catch (e) {
+      if (e instanceof Prisma.PrismaClientKnownRequestError && e.code === 'P2002') {
+        throw new ConflictException('Email already registered');
+      }
+      throw e;
+    }
   }
 
   async login(dto: LoginDto): Promise<AuthResponse> {
