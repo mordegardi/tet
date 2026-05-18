@@ -10,6 +10,7 @@ import { z } from 'zod';
 import Link from 'next/link';
 
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import {
   Form,
   FormControl,
@@ -103,16 +104,14 @@ export function RegisterForm() {
           render={({ field }) => (
             <FormItem>
               <div className="flex items-center gap-2">
-                <input
-                  type="checkbox"
-                  checked={field.value}
-                  onChange={(e) => field.onChange(e.target.checked)}
-                  onBlur={field.onBlur}
-                  name={field.name}
-                  ref={field.ref}
-                  id="terms"
-                  className="h-4 w-4 shrink-0 cursor-pointer accent-primary"
-                />
+                <FormControl>
+                  <Checkbox
+                    id="terms"
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                    onBlur={field.onBlur}
+                  />
+                </FormControl>
                 <label
                   htmlFor="terms"
                   className="text-sm font-normal leading-snug cursor-pointer select-none"
