@@ -1,7 +1,9 @@
 'use client';
 
+import { buttonVariants } from '@/components/ui/button';
 import { ApiError, transactionsApi } from '@/lib/api';
 import type { Transaction } from '@expense-tracker/shared';
+import Link from 'next/link';
 import { useEffect, useState } from 'react';
 
 function formatAmount(amount: string, type: string): string {
@@ -36,7 +38,14 @@ export function TransactionList() {
   if (isLoading) return <p className="text-sm text-gray-500">Загрузка...</p>;
   if (error) return <p className="text-sm text-red-500">{error}</p>;
   if (transactions.length === 0)
-    return <p className="text-sm text-gray-500">Транзакций пока нет.</p>;
+    return (
+      <div className="flex flex-col items-center gap-4 rounded-lg border border-dashed py-12 text-center">
+        <p className="text-sm text-gray-500">Транзакций пока нет.</p>
+        <Link href="/transactions/new" className={buttonVariants()}>
+          Создать транзакцию
+        </Link>
+      </div>
+    );
 
   return (
     <ul className="divide-y rounded-lg border bg-white">
