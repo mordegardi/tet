@@ -6,7 +6,11 @@
       "Bash(git *)",
       "Git *",
       "Ls",
-      "PowerShell(pnpm *)"
+      "PowerShell(pnpm *)",
+      "Bash(Get-ChildItem -Path \"D:\\\\projects\\\\expense-tracker\\\\apps\\\\backend\\\\src\" -Recurse -Include \"*transaction*\")",
+      "Bash(Select-Object -ExpandProperty FullName)",
+      "Bash(Get-ChildItem D:\\\\projects\\\\expense-tracker\\\\packages\\\\shared\\\\src -Recurse)",
+      "Bash(Select-Object FullName)"
     ]
   }
 }
