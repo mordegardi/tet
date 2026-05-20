@@ -96,3 +96,7 @@ After `pnpm dev`: frontend `http://localhost:3000`, backend `http://localhost:30
 - **Filter, don't `cd`.** Run package-scoped commands with `pnpm --filter @expense-tracker/<name> <script>` from the repo root rather than changing directories.
 - **Env files are per-app.** Root `.env` is consumed by `docker-compose.yml`. Backend reads `apps/backend/.env`. Frontend reads `apps/frontend/.env.local`. Each has a matching `.env.example`.
 - **Don't bypass the validation pipe.** Backend controllers should accept DTO classes with `class-validator` decorators; the global `ValidationPipe` will reject anything not on the whitelist.
+
+## Обновление docs
+
+При добавлении функционала, проверяй документацию в @.claude/docs/* и актуализируй соответсвующие данные

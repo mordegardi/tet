@@ -13,6 +13,7 @@ import {
 } from 'class-validator';
 import { TransactionType } from '../../generated/prisma/client';
 
+/** DTO for creating a new transaction. Implements the shared {@link CreateTransactionRequest} contract. */
 export class CreateTransactionDto implements CreateTransactionRequest {
   @ApiProperty({ example: 1500.5, description: 'Amount, up to 2 decimal places' })
   @Type(() => Number)

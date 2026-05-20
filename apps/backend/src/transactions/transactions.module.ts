@@ -5,6 +5,7 @@ import { TransactionsController } from './transactions.controller';
 import { TransactionsRepository } from './transactions.repository';
 import { TransactionsService } from './transactions.service';
 
+/** Feature module for the transactions resource. Imports {@link AuthModule} for JWT guards and {@link CategoriesModule} for category ownership checks. */
 @Module({
   imports: [AuthModule, CategoriesModule],
   controllers: [TransactionsController],

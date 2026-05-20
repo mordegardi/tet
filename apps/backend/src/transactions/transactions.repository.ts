@@ -13,10 +13,15 @@ interface CreateTransactionData {
 
 type UpdateTransactionData = Partial<Omit<CreateTransactionData, 'userId'>>;
 
+/** Data-access layer for the transactions resource. All queries are scoped to a specific user. */
 @Injectable()
 export class TransactionsRepository {
   constructor(private readonly prisma: PrismaService) {}
 
+  /**
+   * Returns all transactions for `userId`, including their category, ordered by date descending.
+   * @returns Promise resolving to an array of transactions.
+   */
   findAllByUser(userId: string) {
     return this.prisma.transaction.findMany({
       where: { userId },
@@ -25,6 +30,10 @@ export class TransactionsRepository {
     });
   }
 
+  /**
+   * Finds a single transaction by `id` belonging to `userId`.
+   * @returns The transaction with its category, or `null` if not found.
+   */
   findByIdForUser(id: string, userId: string) {
     return this.prisma.transaction.findFirst({
       where: { id, userId },
@@ -32,6 +41,10 @@ export class TransactionsRepository {
     });
   }
 
+  /**
+   * Inserts a new transaction row. The ISO date string is converted to a `Date` before persisting.
+   * @returns The created transaction with its category included.
+   */
   create(data: CreateTransactionData) {
     return this.prisma.transaction.create({
       data: {
@@ -46,6 +59,10 @@ export class TransactionsRepository {
     });
   }
 
+  /**
+   * Updates only the provided fields on transaction `id`.
+   * @returns The updated transaction with its category included.
+   */
   update(id: string, data: UpdateTransactionData) {
     return this.prisma.transaction.update({
       where: { id },
@@ -60,10 +77,18 @@ export class TransactionsRepository {
     });
   }
 
+  /**
+   * Deletes transaction `id` from the database.
+   * @returns `void` on success.
+   */
   delete(id: string): Promise<void> {
     return this.prisma.transaction.delete({ where: { id } }).then(() => undefined);
   }
 
+  /**
+   * Aggregates transaction amounts grouped by type (`INCOME` / `EXPENSE`) within a date range.
+   * @returns An object with `income` and `expense`, each containing a `Decimal` `sum` and numeric `count`.
+   */
   async aggregateByType(userId: string, gte: Date, lt: Date) {
     const [income, expense] = await Promise.all([
       this.prisma.transaction.aggregate({

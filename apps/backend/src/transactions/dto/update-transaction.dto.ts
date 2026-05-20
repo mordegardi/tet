@@ -13,6 +13,7 @@ import {
 } from 'class-validator';
 import { TransactionType } from '../../generated/prisma/client';
 
+/** DTO for partially updating an existing transaction. All fields are optional; implements the shared {@link UpdateTransactionRequest} contract. */
 export class UpdateTransactionDto implements UpdateTransactionRequest {
   @ApiPropertyOptional({ example: 2000.0 })
   @IsOptional()
